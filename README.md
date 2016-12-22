@@ -2,15 +2,16 @@
 Conversion from Digital Elevation Model to SVG files representing altitude levels
 
 Get a Digital Elevation Model
-- SRTM
-- EU DEM: http://www.eea.europa.eu/data-and-maps/data/eu-dem
-- Bretagne: geobretagne
-- LTA
+- SRTM (precision model: 90m)
+- EU DEM: http://www.eea.europa.eu/data-and-maps/data/eu-dem (precision model: 30m)
+- Bretagne: geobretagne (precision model: 5m, date: 2012)
+- LTA (precision model: 2m, date: 2011)
 
 Get a geojson polygon file for the zone
-- overpass request
+- overpass request to get xml file and convert to geojson with JOSM. 
+- Note that overpass request only provides a list of ways not always clockwise when requesting a boundary limit
 
-Projection conversion to EPSG:4326 is necessary (required to be compatible with the geojson polygon to delimit the zone)
+Projection conversion to EPSG:4326 if necessary (required to be compatible with the geojson polygon to delimit the zone)
 ```
 gdalwarp -overwrite -s_srs EPSG:2154 -t_srs EPSG:4326 -of GTiff lambert.tif wgs84.tif
 ```
