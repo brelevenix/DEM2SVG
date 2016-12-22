@@ -41,14 +41,13 @@ for level in levels:
 
 x = float(left)
 y = float(top)
-res = 1000 / (float(right)-float(left))
+res = 1000 / (float(right) - float(left))
 
-SVG_START = '<svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg"  encoding="UTF-8"
- version="1.1">'
+SVG_START = '<svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg"  encoding="UTF-8" version="1.1">'
 SVG_END = '</svg>'
 
 NB_DECIMALS = 2
-float_format = "{0:."+str(NB_DECIMALS)+"f}"
+float_format = "{0:." + str(NB_DECIMALS) + "f}"
 
 # Read file with limit (polygon file)
 with open(sys.argv[1]) as json_data:
@@ -56,15 +55,13 @@ with open(sys.argv[1]) as json_data:
 
 # Check polygon : nb >4 and first= last and type=polygon
 
-limit = '<path d="M'
+limit = '<path d = "M'
 polygon_coords = data["features"][0]["geometry"]["coordinates"][0]
 point = polygon_coords[0]
 
-limit+= str(float(float_format.format((point[0]-x)*res))) + ' ' + str(float(float_format.format((
-y-point[1])*res)))
+limit+= str(float(float_format.format((point[0]-x)*res))) + ' ' + str(float(float_format.format((y-point[1])*res)))
 for point in polygon_coords:
-    limit += "," + str(float(float_format.format((point[0]-x)*res))) + " " + str(float(float_form
-at.format((y-point[1])*res)))
+    limit += "," + str(float(float_format.format((point[0]-x)*res))) + " " + str(float(float_format.format((y-point[1])*res)))
 limit_cut = limit + '" stroke="' + COLOR_CUT + '" fill="transparent"  stroke-linecap="round"/>'
 limit_draw = limit + '" stroke="' + COLOR_DRAW + '" fill="transparent" stroke-linecap="round"/>'
 
@@ -72,18 +69,18 @@ svg_levels = {}
 
 # loop for levels
 for level in levels:
-        level_file = level + END_LEVEL_FILE
-        with open(level_file) as json_data:
-                data = json.load(json_data)
+    level_file = level + END_LEVEL_FILE
+    with open(level_file) as json_data:
+        data = json.load(json_data)
 
-        svg_string = ""
-        for lines in data["features"]:
-                svg_string += '<path d="M'
-                point = lines["geometry"]["coordinates"][0]
-                svg_string+= str(float(float_format.format((point[0]-x)*res)))+' '+str(float(float_format.format((y-point[1])*res)))
-                for point in lines["geometry"]["coordinates"]:
-                        svg_string += "," + str(float(float_format.format((point[0]-x)*res))) + " " +str(float(float_format.format((y-point[1])*res)))
-                svg_string += '" stroke="' + COLOR + '" fill="transparent" stroke-linecap="round"/>'
+    svg_string = ""
+    for lines in data["features"]:
+        svg_string += '<path d="M'
+        point = lines["geometry"]["coordinates"][0]
+        svg_string+= str(float(float_format.format((point[0]-x)*res)))+' '+str(float(float_format.format((y-point[1])*res)))
+        for point in lines["geometry"]["coordinates"]:
+            svg_string += "," + str(float(float_format.format((point[0]-x)*res))) + " " +str(float(float_format.format((y-point[1])*res)))
+            svg_string += '" stroke="' + COLOR + '" fill="transparent" stroke-linecap="round"/>'
         svg_levels[level] = svg_string
 
 # Create svg files with 3 layers.
@@ -92,27 +89,27 @@ for level in levels:
 svg = SVG_START + limit_draw
 svg += svg_levels[levels[0]].replace(COLOR, COLOR_DRAW)
 svg += SVG_END
-out = open ("0m.svg","w")
-out.write (svg)
+out = open("0m.svg", "w")
+out.write(svg)
 out.close()
 
 for i in range(0,len(levels)):
-        svg_file = levels[i] + "m.svg"
-        out = open (svg_file, "w")
-        svg = SVG_START + limit_cut
-        svg += svg_levels[levels[i]].replace(COLOR, COLOR_CUT)
-        if (i!=(len(levels)-1)):
-             svg += svg_levels[levels[i+1]].replace(COLOR, COLOR_DRAW)
-        svg += SVG_END
-        out.write (svg)
-        out.close()
+    svg_file = levels[i] + "m.svg"
+    out = open(svg_file, "w")
+    svg = SVG_START + limit_cut
+    svg += svg_levels[levels[i]].replace(COLOR, COLOR_CUT)
+    if (i!=(len(levels)-1)):
+        svg += svg_levels[levels[i+1]].replace(COLOR, COLOR_DRAW)
+    svg += SVG_END
+    out.write(svg)
+    out.close()
 
 # Create a SVG file with all levels
 svg_file = "all.svg"
-out = open (svg_file, "w")
+out = open(svg_file, "w")
 svg = SVG_START + limit_cut
 for i in range(0,len(levels)):
     svg += svg_levels[levels[i]].replace(COLOR, COLOR_CUT)
 svg += SVG_END
-out.write (svg)
+out.write(svg)
 out.close()
