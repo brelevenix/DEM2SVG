@@ -28,8 +28,8 @@ COLOR_CUT = "red"
 COLOR = "@@@"
 END_LEVEL_FILE = "m.geojson"
 
-#compute size with bbox
-f = open (sys.argv[2], 'r')
+# compute size with bbox
+f = open(sys.argv[2], 'r')
 bbox = f.read()
 
 levels_string = sys.argv[3]
@@ -37,7 +37,7 @@ levels_string = sys.argv[3]
 left, bottom, right, top = bbox.split('|')
 levels = levels_string.split('|')
 for level in levels:
-   level = int(level)
+    level = int(level)
 
 x = float(left)
 y = float(top)
@@ -59,9 +59,9 @@ limit = '<path d = "M'
 polygon_coords = data["features"][0]["geometry"]["coordinates"][0]
 point = polygon_coords[0]
 
-limit+= str(float(float_format.format((point[0]-x)*res))) + ' ' + str(float(float_format.format((y-point[1])*res)))
+limit+= str(float(float_format.format((point[0] - x) * res))) + ' ' + str(float(float_format.format((y - point[1]) * res)))
 for point in polygon_coords:
-    limit += "," + str(float(float_format.format((point[0]-x)*res))) + " " + str(float(float_format.format((y-point[1])*res)))
+    limit += "," + str(float(float_format.format((point[0] - x) * res))) + " " + str(float(float_format.format((y - point[1]) * res)))
 limit_cut = limit + '" stroke="' + COLOR_CUT + '" fill="transparent"  stroke-linecap="round"/>'
 limit_draw = limit + '" stroke="' + COLOR_DRAW + '" fill="transparent" stroke-linecap="round"/>'
 
@@ -77,9 +77,9 @@ for level in levels:
     for lines in data["features"]:
         svg_string += '<path d="M'
         point = lines["geometry"]["coordinates"][0]
-        svg_string+= str(float(float_format.format((point[0]-x)*res)))+' '+str(float(float_format.format((y-point[1])*res)))
+        svg_string+= str(float(float_format.format((point[0] - x) * res))) + ' ' + str(float(float_format.format((y - point[1]) * res)))
         for point in lines["geometry"]["coordinates"]:
-            svg_string += "," + str(float(float_format.format((point[0]-x)*res))) + " " +str(float(float_format.format((y-point[1])*res)))
+            svg_string += "," + str(float(float_format.format((point[0] - x) * res))) + " " + str(float(float_format.format((y - point[1]) * res)))
             svg_string += '" stroke="' + COLOR + '" fill="transparent" stroke-linecap="round"/>'
         svg_levels[level] = svg_string
 
@@ -93,12 +93,12 @@ out = open("0m.svg", "w")
 out.write(svg)
 out.close()
 
-for i in range(0,len(levels)):
+for i in range(0, len(levels)):
     svg_file = levels[i] + "m.svg"
     out = open(svg_file, "w")
     svg = SVG_START + limit_cut
     svg += svg_levels[levels[i]].replace(COLOR, COLOR_CUT)
-    if (i!=(len(levels)-1)):
+    if (i != (len(levels) - 1)):
         svg += svg_levels[levels[i+1]].replace(COLOR, COLOR_DRAW)
     svg += SVG_END
     out.write(svg)
@@ -108,7 +108,7 @@ for i in range(0,len(levels)):
 svg_file = "all.svg"
 out = open(svg_file, "w")
 svg = SVG_START + limit_cut
-for i in range(0,len(levels)):
+for i in range(0, len(levels)):
     svg += svg_levels[levels[i]].replace(COLOR, COLOR_CUT)
 svg += SVG_END
 out.write(svg)
