@@ -1,0 +1,42 @@
+{
+  "type": "FeatureCollection",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "generator": "brelevenix",
+  "features": [
+    {
+      "type": "Feature",
+       "bbox": [-3.445437, 48.734448, -3.455865 , 48.73766],
+       "doc": "https://gdal.org/drivers/vector/geojson.html, [west, south, east, north], Polygon counter clock, CRS mandatory",
+       "properties": {
+        "zone": "Stanco"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -3.445437,
+              48.734448
+            ],
+            [
+              -3.445437,
+              48.73766
+            ],
+            [
+              -3.455865,
+              48.73766
+            ],
+            [
+              -3.455865,
+              48.734448
+            ],
+            [
+              -3.445437,
+              48.734448
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
