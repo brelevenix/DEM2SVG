@@ -18,7 +18,7 @@ or     $0 -f <file> -i <file> -l <length> -a <start> -b <stop> -c <step>
   -i: Polygon file for the zone to be extracted
   -l: Length of ways to be removed
   -L: Layers (comma separated value)
-  -c: starting layer
+  -a: starting layer
   -b: end layer
   -c: step between layers
   -h: print this help
