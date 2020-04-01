@@ -13,7 +13,7 @@
 - overpass request to get xml file and convert to geojson with JOSM. 
 - Note that overpass request only provides a list of ways not always clockwise when requesting a boundary limit
 
-##Projection conversion to EPSG:4326 if necessary (required to be compatible with the geojson polygon to delimit the zone)
+## Projection conversion to EPSG:4326 if necessary (required to be compatible with the geojson polygon to delimit the zone)
 ```
 gdalwarp -overwrite -s_srs EPSG:2154 -t_srs EPSG:4326 -of GTiff lambert.tif wgs84.tif
 ```
